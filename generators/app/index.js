@@ -3,6 +3,8 @@ const Generator = require('yeoman-generator')
 const chalk = require('chalk')
 const execSync = require('child_process').execSync
 
+const utils = require('./utils')
+
 module.exports = Generator.extend({
   prompting: function () {
     this.log(`Welcome to the ${chalk.green('pages-project-gallery')} generator!`)
@@ -45,27 +47,33 @@ module.exports = Generator.extend({
     }.bind(this))
   },
 
-  writing: function () {
-    this._templateMap = {
-      username: this.answers.username,
-      installJekyll: this.answers.installJekyll,
-      theme: 'jekyll-theme-slate',  // TODO add theme chooser
-      repositories: [  // TODO add repo finder
-        {'html_url': 'https://github.com/cscanlin/pages-project-gallery'},
-        {'html_url': 'https://github.com/cscanlin/cscanlin.github.io'},
-      ]
-    }
-    this.destinationRoot(`${this.answers.username}.github.io`)
-    this.fs.copyTpl(
-      this.templatePath('**/*'),
-      this.destinationRoot(),
-      this._templateMap
-    )
+  configuring: function () {
+    this.log('configuring...')
+  },
 
-    this.fs.copy(
-      this.templatePath('.*'),
-      this.destinationRoot()
-    )
+  writing: function () {
+    return utils.userRepositories(this.answers.username).then(repositories =>
+      utils.filterRepositories(repositories)
+    ).then(filteredRepositories => {
+      this.log(filteredRepositories.map(repo => repo.html_url))
+      this._templateMap = {
+        username: this.answers.username,
+        installJekyll: this.answers.installJekyll,
+        theme: 'jekyll-theme-slate',  // TODO add theme chooser
+        repositories: filteredRepositories,
+      }
+      this.destinationRoot(`${this.answers.username}.github.io`)
+      this.fs.copyTpl(
+        this.templatePath('**/*'),
+        this.destinationRoot(),
+        this._templateMap
+      )
+      this.fs.copy(
+        this.templatePath('.*'),
+        this.destinationRoot()
+      )
+    })
+
   },
 
   install: function () {
