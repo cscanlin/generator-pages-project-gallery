@@ -1,4 +1,4 @@
-title: <%= username %>.github.io  # replace 'cscanlin' with your username
+title: <%= username %>.github.io
 theme: <%= theme %>
 screenshot_directory: ./assets/images/screenshots/
 screenshot_width: 1280

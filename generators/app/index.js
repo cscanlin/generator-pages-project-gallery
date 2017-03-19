@@ -37,7 +37,7 @@ module.exports = Generator.extend({
         when    : (answers) => utils.noPagesRepoExists(answers.username),
         type    : 'confirm',
         name    : 'createRepository',
-        message : (answers) => `No repo found for ${this.rootName}. Would you like to try to make one?`,
+        message : (answers) => `No repo found for ${answers.username}.github.io. Would you like to try to make one?`,
         default : true,
       },
       {
@@ -102,6 +102,10 @@ module.exports = Generator.extend({
     )
     this.fs.copy(
       this.templatePath('.*'),
+      this.destinationRoot()
+    )
+    this.fs.copy(
+      this.templatePath('**/*/.*'),
       this.destinationRoot()
     )
   },
