@@ -1,0 +1,27 @@
+---
+---
+
+@import "{{ site.theme }}";
+
+.inner {
+  max-width: 800px;
+}
+
+.gallery-images {
+  list-style: none;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.gallery-image {
+  width: 98%;
+}
+
+.repo-name {
+  margin: 0px;
+}
+
+.about-repo-container {
+  margin-top: -30px;
+  padding: 10px;
+}

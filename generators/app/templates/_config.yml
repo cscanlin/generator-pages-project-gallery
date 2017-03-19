@@ -1,0 +1,7 @@
+title: <%= username %>.github.io  # replace 'cscanlin' with your username
+theme: <%= theme %>
+screenshot_directory: ./assets/images/screenshots/
+screenshot_width: 1280
+screenshot_height: 800
+repositories:
+<%= repositories.map(repo =>   `  - repo_url: ${repo.html_url}`).join('\n\n'); %>

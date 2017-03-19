@@ -1,0 +1,37 @@
+{
+  "name": "generator-pages-project-gallery",
+  "version": "0.1.0",
+  "description": "A yeoman generator to easily create a simple project gallery on github pages from a list of other github repositories",
+  "homepage": "https://github.com/cscanlin/generator-pages-project-gallery",
+  "author": {
+    "name": "cscanlin",
+    "email": "cscanlin@gmail.com",
+    "url": "https://cscanlin.github.io/"
+  },
+  "files": [
+    "generators"
+  ],
+  "main": "generators/index.js",
+  "keywords": [
+    "gallery",
+    "generator",
+    "github",
+    "pages",
+    "repo",
+    "repository",
+    "yeoman",
+    "yeoman-generator"
+  ],
+  "dependencies": {
+    "yeoman-generator": "^1.0.0",
+    "chalk": "^1.1.3",
+  },
+  "devDependencies": {
+    "eslint": "^3.1.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cscanlin/generator-pages-project-gallery.git"
+  },
+  "license": "MIT"
+}
