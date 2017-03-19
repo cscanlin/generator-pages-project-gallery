@@ -10,12 +10,23 @@ const filterRepositories = (repositories) => {
   return repositories.filter(repo => !repo.fork && repo.homepage)
 }
 
+const formatRepoChoice = (repo) => ({
+  name: repo.name,
+  value: repo,
+  checked: true
+})
+
 module.exports = {
 
-  repositoriesChoices: (answers) => {
-    return userRepositories(answers.username)
+  noPagesRepoExists: (username) => {
+    return fetch(`https://github.com/${username}/${username}.github.io`)
+           .then(response => response.status !== 200)
+  },
+
+  repositoriesChoices: (username) => {
+    return userRepositories(username)
            .then(repositories => filterRepositories(repositories))
-           .then(filtered => filtered.map(repo => ({ name: repo.name, value: repo, checked: true })))
+           .then(filtered => filtered.map(repo => formatRepoChoice(repo)))
   }
 
 }

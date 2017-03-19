@@ -32,17 +32,24 @@ module.exports = Generator.extend({
         type    : 'checkbox',
         name    : 'repositories',
         message : 'Select which repositories to include. (Repositories only listed if not forked, and have a homepage set): ',
-        choices : (answers) => utils.repositoriesChoices(answers)
+        choices : (answers) => utils.repositoriesChoices(answers.username)
+      },
+      {
+        when    : (answers) => utils.noPagesRepoExists(answers.username),
+        type    : 'confirm',
+        name    : 'createRepository',
+        message : (answers) => `No repo found for ${answers.username}.github.io. Would you like to try to make one?`,
+        default : true,
       }
     ]
 
     try {
       execSync('ruby -v')
       prompts.push({
-        type      : 'confirm',
-        name      : 'installJekyll',
-        message   : 'Ruby install detected - Would you like to install jekyll so you can run your site locally?',
-        default   : true,
+        type    : 'confirm',
+        name    : 'installJekyll',
+        message : 'Ruby install detected - Would you like to install jekyll so you can run your site locally?',
+        default : true,
       })
     } catch (e) {
       this.log(chalk.red('No Ruby install found - please install ruby if you want to run your site locally'))
@@ -55,6 +62,9 @@ module.exports = Generator.extend({
 
   configuring: function () {
     this.log('configuring...')
+    if (this.answers.createRepository) {
+      this.log('repo creation placeholder')
+    }
   },
 
   writing: function () {
