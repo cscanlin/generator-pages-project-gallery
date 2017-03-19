@@ -20,8 +20,6 @@ module.exports = Generator.extend({
       )
     }
 
-    // TODO add option to attempt to initialize repo: https://github.com/generate/generate-gh-repo
-
     let prompts = [
       {
         type    : 'input',
@@ -39,7 +37,7 @@ module.exports = Generator.extend({
         when    : (answers) => utils.noPagesRepoExists(answers.username),
         type    : 'confirm',
         name    : 'createRepository',
-        message : (answers) => `No repo found for ${answers.username}.github.io. Would you like to try to make one?`,
+        message : (answers) => `No repo found for ${this.rootName}. Would you like to try to make one?`,
         default : true,
       },
       {
@@ -64,6 +62,7 @@ module.exports = Generator.extend({
 
     return this.prompt(prompts).then(function (answers) {
       this.answers = answers
+      this.rootName = `${answers.username}.github.io`
     }.bind(this))
   },
 
@@ -74,13 +73,16 @@ module.exports = Generator.extend({
         password: this.answers.password,
       })
       const opts = {
-        name: `${this.answers.username}.github.io`,
-        homepage: `https://${this.answers.username}.github.io`,
+        name: this.rootName,
+        homepage: `https://${this.rootName}`,
         description: 'A simple project portfolio page',
       }
       github.post('/user/repos', opts, (err, res) => {
-        this.log(res)
-        this.log(`${chalk.bold.underline(opts.name)} was created successfully`)
+        if (res.id !== 'undefined') {
+          this.log(chalk.bold.underline(opts.name) + chalk.bold.green(' was created successfully'))
+        } else {
+          this.log(chalk.bold.red(res.message))
+        }
       })
     }
   },
@@ -92,8 +94,7 @@ module.exports = Generator.extend({
       theme: 'jekyll-theme-slate',  // TODO add theme chooser
       repositories: this.answers.repositories,
     }
-    const rootName = `${this.answers.username}.github.io`
-    this.destinationRoot(rootName)
+    this.destinationRoot(this.rootName)
     this.fs.copyTpl(
       this.templatePath('**/*'),
       this.destinationRoot(),
@@ -119,7 +120,12 @@ module.exports = Generator.extend({
 
   end: function () {
     execSync(`git init`)
-    execSync(`git remote add origin https://github.com/${this.answers.username}/${rootName}.git`)
+    const gitURL = `https://github.com/${this.answers.username}/${this.rootName}.git`
+    try {
+      execSync(`git remote add origin ${gitURL} 2>/dev/null`)
+    } catch (e) {
+      execSync(`git remote set-url origin ${gitURL} 2>/dev/null`)
+    }
   }
 
 })
