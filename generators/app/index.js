@@ -27,6 +27,12 @@ module.exports = Generator.extend({
         name    : 'username',
         message : 'What is your github username: ',
         default : defaultUsername,
+      },
+      {
+        type    : 'checkbox',
+        name    : 'repositories',
+        message : 'Select which repositories to include. (Repositories only listed if not forked, and have a homepage set): ',
+        choices : (answers) => utils.repositoriesChoices(answers)
       }
     ]
 
@@ -52,28 +58,22 @@ module.exports = Generator.extend({
   },
 
   writing: function () {
-    return utils.userRepositories(this.answers.username).then(repositories =>
-      utils.filterRepositories(repositories)
-    ).then(filteredRepositories => {
-      this.log(filteredRepositories.map(repo => repo.html_url))
-      this._templateMap = {
-        username: this.answers.username,
-        installJekyll: this.answers.installJekyll,
-        theme: 'jekyll-theme-slate',  // TODO add theme chooser
-        repositories: filteredRepositories,
-      }
-      this.destinationRoot(`${this.answers.username}.github.io`)
-      this.fs.copyTpl(
-        this.templatePath('**/*'),
-        this.destinationRoot(),
-        this._templateMap
-      )
-      this.fs.copy(
-        this.templatePath('.*'),
-        this.destinationRoot()
-      )
-    })
-
+    this._templateMap = {
+      username: this.answers.username,
+      installJekyll: this.answers.installJekyll,
+      theme: 'jekyll-theme-slate',  // TODO add theme chooser
+      repositories: this.answers.repositories,
+    }
+    this.destinationRoot(`${this.answers.username}.github.io`)
+    this.fs.copyTpl(
+      this.templatePath('**/*'),
+      this.destinationRoot(),
+      this._templateMap
+    )
+    this.fs.copy(
+      this.templatePath('.*'),
+      this.destinationRoot()
+    )
   },
 
   install: function () {
