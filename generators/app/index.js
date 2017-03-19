@@ -2,6 +2,7 @@
 const Generator = require('yeoman-generator')
 const chalk = require('chalk')
 const execSync = require('child_process').execSync
+const GitHub = require('github-base')
 
 const utils = require('./utils')
 
@@ -40,6 +41,12 @@ module.exports = Generator.extend({
         name    : 'createRepository',
         message : (answers) => `No repo found for ${answers.username}.github.io. Would you like to try to make one?`,
         default : true,
+      },
+      {
+        when    : (answers) => answers.createRepository,
+        type    : 'password',
+        name    : 'password',
+        message : 'What is your github password?: ',
       }
     ]
 
@@ -61,9 +68,20 @@ module.exports = Generator.extend({
   },
 
   configuring: function () {
-    this.log('configuring...')
-    if (this.answers.createRepository) {
-      this.log('repo creation placeholder')
+    if (this.answers.createRepository && this.answers.password) {
+      const github = new GitHub({
+        username: this.answers.username,
+        password: this.answers.password,
+      })
+      const opts = {
+        name: `${this.answers.username}.github.io`,
+        homepage: `https://${this.answers.username}.github.io`,
+        description: 'A simple project portfolio page',
+      }
+      github.post('/user/repos', opts, (err, res) => {
+        this.log(res)
+        this.log(`${chalk.bold.underline(opts.name)} was created successfully`)
+      })
     }
   },
 
@@ -74,7 +92,8 @@ module.exports = Generator.extend({
       theme: 'jekyll-theme-slate',  // TODO add theme chooser
       repositories: this.answers.repositories,
     }
-    this.destinationRoot(`${this.answers.username}.github.io`)
+    const rootName = `${this.answers.username}.github.io`
+    this.destinationRoot(rootName)
     this.fs.copyTpl(
       this.templatePath('**/*'),
       this.destinationRoot(),
@@ -96,5 +115,11 @@ module.exports = Generator.extend({
       bower: false,
       yarn: false
     })
+  },
+
+  end: function () {
+    execSync(`git init`)
+    execSync(`git remote add origin https://github.com/${this.answers.username}/${rootName}.git`)
   }
+
 })
