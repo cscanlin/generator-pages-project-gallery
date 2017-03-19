@@ -33,15 +33,6 @@ class Repository {
     })
   }
 
-  static _parse_data_from_url(repo_url, screenshot_target) {
-    const repo_data = {
-      name: repo_url.split('/').reverse()[0],
-      html_url: repo_url,
-    }
-    repo_data.homepage = `https://cscanlin.github.io/${repo_data.name}`
-    return new Repository(repo_data, screenshot_target)
-  }
-
   screenshot_filename() {
     return `${this.name}_${INIT_TIME}.png`
   }
