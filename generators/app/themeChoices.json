@@ -1,0 +1,50 @@
+[
+  {
+    "name": "architect",
+    "value": "jekyll-theme-architect"
+  },
+  {
+    "name": "cayman",
+    "value": "jekyll-theme-cayman"
+  },
+  {
+    "name": "dinky",
+    "value": "jekyll-theme-dinky"
+  },
+  {
+    "name": "hacker",
+    "value": "jekyll-theme-hacker"
+  },
+  {
+    "name": "leap-day",
+    "value": "jekyll-theme-leap-day"
+  },
+  {
+    "name": "merlot",
+    "value": "jekyll-theme-merlot"
+  },
+  {
+    "name": "midnight",
+    "value": "jekyll-theme-midnight"
+  },
+  {
+    "name": "minimal",
+    "value": "jekyll-theme-minimal"
+  },
+  {
+    "name": "modernist",
+    "value": "jekyll-theme-modernist"
+  },
+  {
+    "name": "slate",
+    "value": "jekyll-theme-slate"
+  },
+  {
+    "name": "tactile",
+    "value": "jekyll-theme-tactile"
+  },
+  {
+    "name": "time-machine",
+    "value": "jekyll-theme-time-machine"
+  }
+]

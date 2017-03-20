@@ -12,7 +12,7 @@
     "eslint": "^3.17.1"
   },
   "scripts": {
-    "run": "bundle exec jekyll serve",
+    "start": "bundle exec jekyll serve",
     "build": "node site_builder_node.js",
     "deploy": "git push origin master"
   }

@@ -5,9 +5,13 @@
 
 .inner {
   max-width: 800px;
+  position: relative;
+  padding: 20px 10px;
+  margin: 0 auto;
 }
 
 .gallery-images {
+  margin-top: 30px;
   list-style: none;
   padding-left: 20px;
   padding-right: 20px;
@@ -22,6 +26,13 @@
 }
 
 .about-repo-container {
-  margin-top: -30px;
   padding: 10px;
+}
+
+.main-content hr {
+  margin: 2rem auto;
+}
+
+li:before {
+  display: none;
 }

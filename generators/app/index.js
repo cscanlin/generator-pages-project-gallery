@@ -5,6 +5,7 @@ const execSync = require('child_process').execSync
 const GitHub = require('github-base')
 
 const utils = require('./utils')
+const themeChoices = require('./themeChoices.json')
 
 module.exports = Generator.extend({
   prompting: function () {
@@ -28,10 +29,17 @@ module.exports = Generator.extend({
         default : defaultUsername,
       },
       {
+        type    : 'list',
+        name    : 'theme',
+        message : `Select your theme:\n${chalk.italic('The following are supported by github, but most jekyll themes will work - https://pages.github.com/themes/:')}`,
+        choices : themeChoices,
+        default : 'jekyll-theme-cayman',
+      },
+      {
         type    : 'checkbox',
         name    : 'repositories',
         message : 'Select which repositories to include. (Repositories only listed if not forked, and have a homepage set): ',
-        choices : (answers) => utils.repositoriesChoices(answers.username)
+        choices : (answers) => utils.repositoriesChoices(answers.username),
       },
       {
         when    : (answers) => utils.noPagesRepoExists(answers.username),
@@ -88,17 +96,11 @@ module.exports = Generator.extend({
   },
 
   writing: function () {
-    this._templateMap = {
-      username: this.answers.username,
-      installJekyll: this.answers.installJekyll,
-      theme: 'jekyll-theme-slate',  // TODO add theme chooser
-      repositories: this.answers.repositories,
-    }
     this.destinationRoot(this.rootName)
     this.fs.copyTpl(
       this.templatePath('**/*'),
       this.destinationRoot(),
-      this._templateMap
+      this.answers
     )
     this.fs.copy(
       this.templatePath('.*'),

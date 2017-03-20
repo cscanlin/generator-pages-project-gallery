@@ -3,7 +3,14 @@ const fetch = require('isomorphic-fetch')
 
 const userRepositories = (username) => {
   const full_api_path = `https://api.github.com/users/${username}/repos?sort=created`
-  return fetch(full_api_path).then(response => response.json())
+  return fetch(full_api_path)
+         .then(response => {
+           if (!response.ok) {
+              throw Error(response.statusText)
+           }
+           return response
+         })
+         .then(response => response.json())
 }
 
 const filterRepositories = (repositories) => {
@@ -27,6 +34,9 @@ module.exports = {
     return userRepositories(username)
            .then(repositories => filterRepositories(repositories))
            .then(filtered => filtered.map(repo => formatRepoChoice(repo)))
+           .catch((error) => {
+              console.log('There was a problem fetching your data from github: ' + error)
+            })
   }
 
 }
