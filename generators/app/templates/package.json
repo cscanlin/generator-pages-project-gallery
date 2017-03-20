@@ -1,6 +1,6 @@
 {
   "name": "<%= username %>.github.io",
-  "homepage": "https://github.com/<%= username %>/<%= username %>.github.io",
+  "homepage": "https://<%= username %>.github.io/",
   "private": true,
   "version": "1.0.0",
   "dependencies": {
