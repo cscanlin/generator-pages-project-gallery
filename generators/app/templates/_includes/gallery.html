@@ -1,0 +1,24 @@
+<!-- Based on https://github.com/lthr/github-gallery -->
+<ul class="gallery-images">
+  {% for repo in site.data.repo_data %}
+    {% assign image_path = site.screenshot_directory | append: repo.screenshot %}
+    <li class="gallery-images-li" id="{{ repo.name }}">
+      <div class="gallery-image-container">
+        <a name="{{ image_path }}" href="{{ repo.homepage }}">
+          <img
+            class="gallery-image"
+            src=".{{ image_path }}"
+            alt="{{ repo.name }}"
+          />
+        </a>
+      </div>
+      <div class="about-repo-container">
+        <a href="{{ repo.html_url }}"><h4 class="repo-name">{{ repo.name }}</h4></a>
+        <span>{{ repo.description }}</span>
+      </div>
+    </li>
+    <hr width=90%  align=center>
+  {% endfor %}
+</ul>
+
+<p style="font-size: small;">Created with <a href="https://github.com/cscanlin/generator-pages-project-gallery">generator-pages-project-gallery</a></p>
