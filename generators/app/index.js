@@ -30,6 +30,12 @@ module.exports = Generator.extend({
         default : defaultUsername,
       },
       {
+        type    : 'input',
+        name    : 'rootName',
+        message : `What is the name of your project:\n${chalk.italic.bold('If you are deploying a github pages user page, you must use the defualt!\n')}`,
+        default : (answers) => `${answers.username}.github.io`,
+      },
+      {
         type    : 'list',
         name    : 'theme',
         message : `Select your theme:\n${chalk.italic('The following are supported by github, but most jekyll themes will work - https://pages.github.com/themes/:')}`,
@@ -71,7 +77,6 @@ module.exports = Generator.extend({
 
     return this.prompt(prompts).then(function (answers) {
       this.answers = answers
-      this.rootName = `${answers.username}.github.io`
     }.bind(this))
   },
 
@@ -82,8 +87,8 @@ module.exports = Generator.extend({
         password: this.answers.password,
       })
       const opts = {
-        name: this.rootName,
-        homepage: `https://${this.rootName}`,
+        name: this.answers.rootName,
+        homepage: `https://${this.answers.rootName}`,
         description: 'A simple project portfolio page',
       }
       github.post('/user/repos', opts, (err, res) => {
@@ -97,8 +102,8 @@ module.exports = Generator.extend({
   },
 
   writing: function () {
-    if (path.basename(process.cwd()) !== this.rootName) {
-      this.destinationRoot(this.rootName)
+    if (path.basename(process.cwd()) !== this.answers.rootName) {
+      this.destinationRoot(this.answers.rootName)
     }
     this.fs.copyTpl(
       this.templatePath('**/*'),
@@ -129,7 +134,7 @@ module.exports = Generator.extend({
 
   end: function () {
     execSync(`git init`)
-    const gitURL = `https://github.com/${this.answers.username}/${this.rootName}.git`
+    const gitURL = `https://github.com/${this.answers.username}/${this.answers.rootName}.git`
     try {
       execSync(`git remote add origin ${gitURL} 2>/dev/null`)
     } catch (e) {
