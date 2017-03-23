@@ -1,6 +1,6 @@
 # generator-pages-project-gallery
 
-A yeoman generator to easily create a simple project gallery on github pages from a list of other github repositories
+A yeoman generator to easily create a simple project gallery on github pages, using your other github repositories
 
 ## Installation
 

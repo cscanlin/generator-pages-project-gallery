@@ -1,8 +1,9 @@
 'use strict'
-const Generator = require('yeoman-generator')
 const chalk = require('chalk')
 const execSync = require('child_process').execSync
+const Generator = require('yeoman-generator')
 const GitHub = require('github-base')
+const path = require('path')
 
 const utils = require('./utils')
 const themeChoices = require('./themeChoices.json')
@@ -96,7 +97,9 @@ module.exports = Generator.extend({
   },
 
   writing: function () {
-    this.destinationRoot(this.rootName)
+    if (path.basename(process.cwd()) !== this.rootName) {
+      this.destinationRoot(this.rootName)
+    }
     this.fs.copyTpl(
       this.templatePath('**/*'),
       this.destinationRoot(),
