@@ -6,7 +6,7 @@
   "dependencies": {
     "isomorphic-fetch": "^2.2.1",
     "js-yaml": "^3.8.2",
-    "nightmare": "^2.10.0"
+    "nightmare": "git+https://github.com/cscanlin/nightmare.git#dev/fix.multiple.concurrent.frames"
   },
   "devDependencies": {
     "eslint": "^3.17.1"
