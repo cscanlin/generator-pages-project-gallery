@@ -15,7 +15,7 @@ npm install -g yo
 npm install -g generator-pages-project-gallery
 yo pages-project-gallery
 # run through the prompts
-npm run build  # retrieve data / capture screenshots
+npm run scrape  # retrieve data / capture screenshots
 npm start  # run your site locally at http://127.0.0.1:4000/
 git commit -am "initial github pages personal page"  # create a repo first if not done in generator
 git push origin master  # deploy and see it live at https://USERNAME.github.io
@@ -45,18 +45,18 @@ After running through the generator, the following files / directory structure w
   ├─ LICENSE
   ├─ package.json
   ├─ README.md
-  └─ site_builder_node.js
+  └─ repository_scraper.js
 ```
 
 You then have a chance to further customize your page. You can control which repositories are included on your page, which page is targeted for screenshot, and individual/default screnshot size in `_config.yml`:
 
 ```
-# Site Builder Options
+# Repository Scraper Options
 screenshot_width: 1280
 screenshot_height: 800
 repositories:
   - repo_url: https://github.com/USERNAME/my-project
-    screenshot_target: http://www.my-project.com/alternative/screenshot/target_page
+    screenshot_target: https://www.my-project.com/alternative/screenshot/target_page
     screenshot_height: 450
 
   - repo_url: https://github.com/USERNAME/my-other-project
@@ -64,7 +64,7 @@ repositories:
 
 ### More Customization
 
-If you want to customize further, jekyll is extremely flexible and very easy to extend. A good place to start is in `index.html` and `_includes/gallery.html`.
+If you want to customize further, jekyll is extremely flexible and very easy to extend. `index.html` and `_includes/gallery.html` are good places to start.
 
 This generator can be run in *any* existing jekyll project as well (Though make sure to watch for conflicts!)
 
@@ -73,8 +73,12 @@ See the jekyll documentation for more details: https://jekyllrb.com/docs/home/
 
 ### TODO
 
-- Multiple Pages Boilerplate
+- travis
+- Multiple pages boilerplate
+- Better options for choosing repos
 - Gitlab support?
+- README:
+  - upgrading / diffs
 
 ### License
 

@@ -2,10 +2,10 @@ author: <%= username %>
 title: <%= username %>.github.io
 domain: <%= username %>.github.io
 theme: <%= theme %>
-exclude: ['README.md', 'Gemfile', 'Gemfile.lock', 'site_builder_node.js']
+exclude: ['README.md', 'Gemfile', 'Gemfile.lock', 'repository_scraper.js']
 screenshot_directory: ./assets/images/screenshots/
 
-# Site Builder
+# Repository Scraper
 screenshot_width: 1280
 screenshot_height: 800
 repositories:
