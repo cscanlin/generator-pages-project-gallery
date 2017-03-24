@@ -1,6 +1,6 @@
 {
   "name": "generator-pages-project-gallery",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "A yeoman generator to easily create a simple project gallery on github pages from a list of other github repositories",
   "homepage": "https://github.com/cscanlin/generator-pages-project-gallery",
   "author": {

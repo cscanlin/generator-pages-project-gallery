@@ -6,7 +6,7 @@ Live Demo: https://cscanlin.github.io/
 
 ## Installation
 
-*Note: For the generator to work correctly you should have at least one public Github repository that you are the owner of, and that also has a homepage listed in the space next to the top description of your repo.*
+*Note: For the generator to work correctly, you should be the owner of at least one public Github repository that has a homepage listed in the space next to its top description.*
 
 ### Quickstart
 
@@ -15,10 +15,10 @@ npm install -g yo
 npm install -g generator-pages-project-gallery
 yo pages-project-gallery
 # run through the prompts
-npm run build
-npm start  # to view locally
-git commit -am "initial github pages personal page"
-git push origin master
+npm run build  # retrieve data / capture screenshots
+npm start  # run your site locally at http://127.0.0.1:4000/
+git commit -am "initial github pages personal page"  # create a repo first if not done in generator
+git push origin master  # deploy and see it live at https://USERNAME.github.io
 ```
 
 
@@ -74,7 +74,7 @@ See the jekyll documentation for more details: https://jekyllrb.com/docs/home/
 ### TODO
 
 - Multiple Pages Boilerplate
-- Gitlab support
+- Gitlab support?
 
 ### License
 
